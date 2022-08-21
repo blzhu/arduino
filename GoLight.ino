@@ -26,7 +26,9 @@ int angleTopFk=0;
 Servo servoTop;
 Servo servoBase;
 Thread myThread = Thread();
-int bAuto = 1;
+int bAuto = 0;
+int autoCount = 10;
+int intervalTime = 100;
 int intrruptCount = 0;
 int autoTimer = 0;
 void setup() {
@@ -64,7 +66,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(3), buttonDown, RISING ); 
   delay(1000);
   myThread.onRun(threadAction);
-  myThread.setInterval(100);
+  myThread.setInterval(intervalTime);
 }
 void buttonDown()
 {
@@ -260,7 +262,7 @@ void threadAction()
   if(bAuto)
   {
     autoTimer++;
-    if(autoTimer % 10 == 0)
+    if(autoTimer % autoCount == 0)
       moveArmAuto();
   }
   else
